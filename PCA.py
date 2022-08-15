@@ -6,6 +6,11 @@ from sklearn.preprocessing import StandardScaler
 import io
 from sklearn.decomposition import PCA
 
+st.set_page_config(
+    page_title="주성분 분석(PCA) 알고리즘의 개념 및 예시 프로젝트",
+    page_icon="🧊",
+)
+
 st.title('주성분 분석(PCA) 알고리즘의 개념 및 예시 프로젝트')
 st.caption('2022-08-15, 2022 선린인터넷고등학교 20612 양현준 작성')
 
@@ -79,12 +84,11 @@ st.code('''fish = pd.read_csv('./Fish.csv')
 fish.head(10)
 ''',
         language='python')
+st.markdown('불러온 csv파일을 위에서 10개 줄 까지만 출력합니다.')
 
 fish = pd.read_csv('./Fish.csv')
 st.dataframe(fish.head(10))
-
-st.markdown('불러온 csv파일을 위에서 10개 줄 까지만 출력합니다.')
-
+#st.markdown('<br><br><br><br>', unsafe_allow_html=True)
 st.markdown('#### 데이터 전처리')
 
 st.code('''
@@ -107,6 +111,9 @@ fish['Species'] = fish['Species'].str.replace('Smelt', '6')
 fish['Species'] = pd.to_numeric(fish['Species'])
 fish.head(10)
 ''')
+st.markdown(
+    '첫번째 전처리에서는 Bream을 0, Roach를 1, Whitefish를 2, Parkki를 3, Perch를 4, Pike를 5, Smelt를 6으로 간주하고 replace를 통해 바꿨습니다.'
+)
 
 fish['Species'] = fish['Species'].str.replace('Bream', '0')
 fish['Species'] = fish['Species'].str.replace('Roach', '1')
@@ -117,10 +124,6 @@ fish['Species'] = fish['Species'].str.replace('Pike', '5')
 fish['Species'] = fish['Species'].str.replace('Smelt', '6')
 fish['Species'] = pd.to_numeric(fish['Species'])
 st.dataframe(fish.head(10))
-
-st.markdown(
-    '첫번째 전처리에서는 Bream을 0, Roach를 1, Whitefish를 2, Parkki를 3, Perch를 4, Pike를 5, Smelt를 6으로 간주하고 replace를 통해 바꿨습니다.'
-)
 
 st.code('''
 scaler = StandardScaler()
@@ -134,6 +137,10 @@ scaled_fish['Species'] = targets
 scaled_fish.head(10))
 ''',
         language='python')
+
+st.markdown(
+    '아까 언급했듯이, PCA를 하기 위해서는 정규화(Normalizaion)를 필수로 해야합니다. 따라서 StandardScaler를 통해 스케일링을 진행했습니다.'
+)
 scaler = StandardScaler()
 targets = fish['Species']
 fish = fish.drop(columns='Species')
@@ -143,9 +150,7 @@ scaled_fish = pd.DataFrame(scaled_fish,
                            columns=['Weight', 'Length', 'Height', 'Width'])
 scaled_fish['Species'] = targets
 st.dataframe(scaled_fish.head(10))
-st.markdown(
-    '아까 언급했듯이, PCA를 하기 위해서는 정규화(Normalizaion)를 필수로 해야합니다. 따라서 StandardScaler를 통해 스케일링을 진행했습니다.'
-)
+
 dim = 2
 st.markdown('#### PCA 차원축소')
 st.code('''
