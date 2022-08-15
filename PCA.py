@@ -88,7 +88,6 @@ st.markdown('불러온 csv파일을 위에서 10개 줄 까지만 출력합니�
 
 fish = pd.read_csv('./Fish.csv')
 st.dataframe(fish.head(10))
-#st.markdown('<br><br><br><br>', unsafe_allow_html=True)
 st.markdown('#### 데이터 전처리')
 
 st.code('''
